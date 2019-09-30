@@ -1,0 +1,24 @@
+{
+  "name": "berman-screens-backend",
+  "version": "1.0.0",
+  "description": "A backend for the Berman Screens",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -e js,graphql -x node src/index.js",
+    "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
+    "test": "jest",
+    "deploy": "prisma deploy"
+  },
+  "author": "Jim Orluk",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.0.0",
+    "graphql": "^14.3.1",
+    "graphql-cli": "^3.0.11",
+    "graphql-yoga": "^1.17.4",
+    "nodemon": "^1.19.1",
+    "prisma-binding": "^2.3.12"
+  }
+}

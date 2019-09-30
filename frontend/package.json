@@ -1,0 +1,38 @@
+{
+  "name": "berman-screens-frontend",
+  "version": "1.0.0",
+  "description": "An app to manage and display announcements and schedules at Berman",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next -p 7777",
+    "build": "next build",
+    "start": "next start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Jim Orluk",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.0",
+    "@apollo/react-ssr": "^3.1.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.24",
+    "@fortawesome/free-solid-svg-icons": "^5.11.1",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@types/react": "^16.9.2",
+    "apollo-boost": "^0.4.4",
+    "graphql": "^14.3.1",
+    "graphql-tag": "^2.10.1",
+    "next": "^9.0.5",
+    "next-with-apollo": "^4.3.0",
+    "node-fetch": "^2.6.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-apollo": "^3.1.0",
+    "react-beautiful-dnd": "^11.0.5",
+    "react-contenteditable": "^3.3.2",
+    "react-dom": "^16.8.6",
+    "react-uuid": "^1.0.2",
+    "sanitize-html": "^1.20.1",
+    "styled-components": "^4.3.1"
+  }
+}

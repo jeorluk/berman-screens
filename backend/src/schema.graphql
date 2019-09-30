@@ -1,0 +1,50 @@
+# import * from './generated/prisma.graphql'
+
+type SuccessMessage {
+  message: String
+}
+
+type Mutation {
+  updateUser(activeScheduleId: ID, editScheduleId: ID, userId: ID): User
+  signup(name: String, password:String!): User!
+  signin(name: String!, password: String!): User!
+  signout: SuccessMessage
+
+  createSchedule(name: String!, periods: String!): Schedule
+  updateSchedule(id: ID!, name: String!, periods: String!): Schedule
+  deleteSchedule(id: ID!): Schedule
+
+  createAnnouncement(title: String, items: [String], isLinkToImage: Boolean, order: Int): Announcement
+  updateAnnouncement(id: ID!, title: String, items: [String], isLinkToImage: Boolean, order: Int): Announcement
+  deleteAnnouncement(id: ID!): Announcement
+}
+
+type Query {
+  me: User
+  user(where: UserWhereUniqueInput!): User
+  users: [User]!
+  schedules(where: ScheduleWhereInput, orderBy: ScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule]!
+  schedule(where: ScheduleWhereUniqueInput!): Schedule
+  announcements(where: AnnouncementWhereInput, orderBy: AnnouncementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Announcement]!
+  announcement(where: AnnouncementWhereUniqueInput!): Announcement,
+
+  weather: Weather
+}
+
+type Weather {
+  temp: Int!,
+  icon: String!,
+  description: String!,
+}
+
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  permissions: [Permission!]!
+  announcements(where: AnnouncementWhereInput, orderBy: AnnouncementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Announcement]!
+  schedules(where: ScheduleWhereInput, orderBy: ScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule]!
+  activeSchedule: Schedule
+  editSchedule: Schedule
+}

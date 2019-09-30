@@ -1,0 +1,31 @@
+enum Permission {
+  USER
+  ADMIN
+}
+
+type User {
+  id: ID! @id
+  name: String! @unique
+  password: String!
+  permissions: [Permission] @scalarList(strategy: RELATION)
+  announcements: [Announcement!] @relation(name: "UserAnnouncements")
+  schedules: [Schedule!] @relation(name: "UserSchedules")
+  activeSchedule: Schedule @relation(name: "ActiveSchedule")
+  editSchedule: Schedule @relation(name: "EditSchedule")
+}
+
+type Schedule {
+  id: ID! @id
+  name: String!
+  periods: String!
+  user: User! @relation(name: "UserSchedules")
+}
+
+type Announcement {
+  id: ID! @id
+  title: String!
+  items: [String!]! @scalarList(strategy: RELATION)
+  user: User! @relation(name: "UserAnnouncements")
+  isLinkToImage: Boolean!
+  order: Int!
+}
