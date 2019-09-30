@@ -4,7 +4,7 @@
   "description": "An app to manage and display announcements and schedules at Berman",
   "main": "index.js",
   "scripts": {
-    "dev": "next -p 7777",
+    "dev": "next -p 4401",
     "build": "next build",
     "start": "next start",
     "test": "echo \"Error: no test specified\" && exit 1"
