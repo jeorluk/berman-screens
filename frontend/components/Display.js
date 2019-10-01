@@ -39,11 +39,7 @@ const Display = props => {
       <div id="mainContent">
         <MainScreenData />
       </div>
-      <img
-        id="logo"
-        src="static/75_Berman-01 MASTER.png"
-        alt="Berman 75th Logo"
-      />
+      <img id="logo" src="static/BermanLogo.jpg" alt="Berman Logo" />
     </DisplayLayout>
   )
 }
