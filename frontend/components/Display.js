@@ -15,7 +15,8 @@ const DisplayLayout = styled.div`
   }
 
   #logo {
-    height: 200px;
+    /* height: 200px; */
+    max-width: 150px;
     position: fixed;
     bottom: 10px;
     right: 10px;
