@@ -62,7 +62,11 @@ const WeatherPanel = () => {
         src={`static/${data.weather.icon}.png`}
         alt="Weather Icon"
       />
-      <div id="weatherDescription">{data.weather.description}</div>
+      <div id="weatherDescription">
+        {data.weather.description === 'smoke'
+          ? 'mist'
+          : data.weather.description}
+      </div>
     </WeatherContainer>
   )
 }
