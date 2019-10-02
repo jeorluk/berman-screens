@@ -24,16 +24,7 @@ const DisplayLayout = styled.div`
 `
 const Display = props => {
   const { division } = props
-  // const { loading: userLoading, error: userError, data: userData } = useQuery(
-  //   SINGLE_USER_QUERY,
-  //   {
-  //     variables: { name: division },
-  //   }
-  // )
-  // console.log(userData)
 
-  // if (userLoading) return <h2>Loading...</h2>
-  // if (userError) return { userError }
   return (
     <DisplayLayout>
       <SchedulePane />
