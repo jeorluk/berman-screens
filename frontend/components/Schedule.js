@@ -13,6 +13,11 @@ const ScheduleStyles = styled.div`
     margin: 5px;
     text-align: center;
   }
+
+  @media only screen and (max-width: ${props => props.theme.smallBreak}) {
+    width: 100%;
+    font-size: 1.5rem;
+  }
 `
 
 const Schedule = () => {

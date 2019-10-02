@@ -11,6 +11,8 @@ const theme = {
   secondaryDark: '#cccccc',
   secondaryLight: '#ffffff',
 
+  smallBreak: '768px',
+
   bs: `3px 0 6px rgba(0,0,0,.3)`,
 }
 

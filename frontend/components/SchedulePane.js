@@ -8,7 +8,8 @@ const SchedulePaneStyles = styled.div`
   font-size: 2.7rem;
   height: 100vh;
   width: 450px;
-  overflow: auto;
+  /* overflow: auto; */
+  overflow: hidden;
   /* padding: 10px 0; */
   background: ${props => props.theme.primary};
   color: ${props => props.theme.secondary};
@@ -20,6 +21,11 @@ const SchedulePaneStyles = styled.div`
     width: 100%;
     margin: 0;
     color: ${props => props.theme.secondary};
+  }
+
+  @media only screen and (max-width: ${props => props.theme.smallBreak}) {
+    width: 100%;
+    font-size: 2rem;
   }
 `
 

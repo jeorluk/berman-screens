@@ -9,17 +9,21 @@ const DisplayLayout = styled.div`
   grid-template-columns: auto 1fr;
 
   #mainContent {
+    position: relative;
     color: ${props => props.theme.primary};
     background: ${props => props.theme.secondary};
     font-size: 50px;
   }
 
   #logo {
-    /* height: 200px; */
     max-width: 150px;
-    position: fixed;
+    position: absolute;
     bottom: 10px;
     right: 10px;
+  }
+
+  @media only screen and (max-width: ${props => props.theme.smallBreak}) {
+    grid-template-columns: 1fr;
   }
 `
 const Display = props => {
@@ -30,8 +34,8 @@ const Display = props => {
       <SchedulePane />
       <div id="mainContent">
         <MainScreenData />
+        <img id="logo" src="static/BermanLogo.jpg" alt="Berman Logo" />
       </div>
-      <img id="logo" src="static/BermanLogo.jpg" alt="Berman Logo" />
     </DisplayLayout>
   )
 }
