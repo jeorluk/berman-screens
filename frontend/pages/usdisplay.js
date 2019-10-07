@@ -1,7 +1,12 @@
 import Display from '../components/Display'
+import { ContextProvider } from '../globalState/state'
 
 const USDisplay = props => {
-  return <Display division="upperschool" />
+  return (
+    <ContextProvider division="upperschool">
+      <Display />
+    </ContextProvider>
+  )
 }
 
 export default USDisplay
