@@ -4,7 +4,7 @@ enum Permission {
 }
 
 type User {
-  id: ID! @unique
+  id: ID! @unique @id
   name: String! @unique
   password: String!
   permissions: [Permission] @scalarList(strategy: RELATION)
@@ -12,17 +12,18 @@ type User {
   schedules: [Schedule!]! @relation(name: "UserSchedules")
   activeSchedule: Schedule @relation(name: "ActiveSchedule")
   editSchedule: Schedule @relation(name: "EditSchedule")
+  parnasHayom: [String!]! @scalarList(strategy: RELATION)
 }
 
 type Schedule {
-  id: ID! @unique
+  id: ID! @unique @id
   name: String!
   periods: String!
   user: User! @relation(name: "UserSchedules")
 }
 
 type Announcement {
-  id: ID! @unique
+  id: ID! @unique @id
   title: String!
   items: [String!]! @scalarList(strategy: RELATION)
   user: User! @relation(name: "UserAnnouncements")

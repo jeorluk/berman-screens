@@ -1,5 +1,5 @@
-# source: https://screens-prisma.jimorluk.com/berman-screens-prod/production
-# timestamp: Tue Oct 01 2019 10:32:22 GMT-0400 (Eastern Daylight Time)
+# source: https://us1.prisma.sh/jim-orluk/berman-screens/dev
+# timestamp: Wed Oct 09 2019 13:56:54 GMT-0400 (Eastern Daylight Time)
 
 type AggregateAnnouncement {
   count: Int!
@@ -17,7 +17,7 @@ type Announcement implements Node {
   id: ID!
   title: String!
   items: [String!]!
-  user(where: UserWhereInput): User!
+  user: User!
   isLinkToImage: Boolean!
   order: Int!
 }
@@ -33,6 +33,7 @@ type AnnouncementConnection {
 }
 
 input AnnouncementCreateInput {
+  id: ID
   title: String!
   isLinkToImage: Boolean!
   order: Int!
@@ -50,6 +51,7 @@ input AnnouncementCreateManyWithoutUserInput {
 }
 
 input AnnouncementCreateWithoutUserInput {
+  id: ID
   title: String!
   isLinkToImage: Boolean!
   order: Int!
@@ -74,10 +76,6 @@ enum AnnouncementOrderByInput {
   isLinkToImage_DESC
   order_ASC
   order_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type AnnouncementPreviousValues {
@@ -86,6 +84,123 @@ type AnnouncementPreviousValues {
   items: [String!]!
   isLinkToImage: Boolean!
   order: Int!
+}
+
+input AnnouncementScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AnnouncementScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AnnouncementScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AnnouncementScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  isLinkToImage: Boolean
+
+  """All values that are not equal to given value."""
+  isLinkToImage_not: Boolean
+  order: Int
+
+  """All values that are not equal to given value."""
+  order_not: Int
+
+  """All values that are contained in given list."""
+  order_in: [Int!]
+
+  """All values that are not contained in given list."""
+  order_not_in: [Int!]
+
+  """All values less than the given value."""
+  order_lt: Int
+
+  """All values less than or equal the given value."""
+  order_lte: Int
+
+  """All values greater than the given value."""
+  order_gt: Int
+
+  """All values greater than or equal the given value."""
+  order_gte: Int
 }
 
 type AnnouncementSubscriptionPayload {
@@ -130,20 +245,42 @@ input AnnouncementUpdateInput {
   isLinkToImage: Boolean
   order: Int
   items: AnnouncementUpdateitemsInput
-  user: UserUpdateOneWithoutAnnouncementsInput
+  user: UserUpdateOneRequiredWithoutAnnouncementsInput
 }
 
 input AnnouncementUpdateitemsInput {
   set: [String!]
 }
 
+input AnnouncementUpdateManyDataInput {
+  title: String
+  isLinkToImage: Boolean
+  order: Int
+  items: AnnouncementUpdateitemsInput
+}
+
+input AnnouncementUpdateManyMutationInput {
+  title: String
+  isLinkToImage: Boolean
+  order: Int
+  items: AnnouncementUpdateitemsInput
+}
+
 input AnnouncementUpdateManyWithoutUserInput {
   create: [AnnouncementCreateWithoutUserInput!]
   connect: [AnnouncementWhereUniqueInput!]
+  set: [AnnouncementWhereUniqueInput!]
   disconnect: [AnnouncementWhereUniqueInput!]
   delete: [AnnouncementWhereUniqueInput!]
   update: [AnnouncementUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [AnnouncementUpdateManyWithWhereNestedInput!]
+  deleteMany: [AnnouncementScalarWhereInput!]
   upsert: [AnnouncementUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input AnnouncementUpdateManyWithWhereNestedInput {
+  where: AnnouncementScalarWhereInput!
+  data: AnnouncementUpdateManyDataInput!
 }
 
 input AnnouncementUpdateWithoutUserDataInput {
@@ -310,9 +447,9 @@ type Mutation {
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertAnnouncement(where: AnnouncementWhereUniqueInput!, create: AnnouncementCreateInput!, update: AnnouncementUpdateInput!): Announcement!
   upsertSchedule(where: ScheduleWhereUniqueInput!, create: ScheduleCreateInput!, update: ScheduleUpdateInput!): Schedule!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyAnnouncements(data: AnnouncementUpdateInput!, where: AnnouncementWhereInput): BatchPayload!
-  updateManySchedules(data: ScheduleUpdateInput!, where: ScheduleWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyAnnouncements(data: AnnouncementUpdateManyMutationInput!, where: AnnouncementWhereInput): BatchPayload!
+  updateManySchedules(data: ScheduleUpdateManyMutationInput!, where: ScheduleWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyAnnouncements(where: AnnouncementWhereInput): BatchPayload!
   deleteManySchedules(where: ScheduleWhereInput): BatchPayload!
@@ -372,7 +509,7 @@ type Schedule implements Node {
   id: ID!
   name: String!
   periods: String!
-  user(where: UserWhereInput): User!
+  user: User!
 }
 
 """A connection to a list of items."""
@@ -386,6 +523,7 @@ type ScheduleConnection {
 }
 
 input ScheduleCreateInput {
+  id: ID
   name: String!
   periods: String!
   user: UserCreateOneWithoutSchedulesInput!
@@ -402,6 +540,7 @@ input ScheduleCreateOneInput {
 }
 
 input ScheduleCreateWithoutUserInput {
+  id: ID
   name: String!
   periods: String!
 }
@@ -422,16 +561,143 @@ enum ScheduleOrderByInput {
   name_DESC
   periods_ASC
   periods_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type SchedulePreviousValues {
   id: ID!
   name: String!
   periods: String!
+}
+
+input ScheduleScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ScheduleScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ScheduleScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ScheduleScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  periods: String
+
+  """All values that are not equal to given value."""
+  periods_not: String
+
+  """All values that are contained in given list."""
+  periods_in: [String!]
+
+  """All values that are not contained in given list."""
+  periods_not_in: [String!]
+
+  """All values less than the given value."""
+  periods_lt: String
+
+  """All values less than or equal the given value."""
+  periods_lte: String
+
+  """All values greater than the given value."""
+  periods_gt: String
+
+  """All values greater than or equal the given value."""
+  periods_gte: String
+
+  """All values containing the given string."""
+  periods_contains: String
+
+  """All values not containing the given string."""
+  periods_not_contains: String
+
+  """All values starting with the given string."""
+  periods_starts_with: String
+
+  """All values not starting with the given string."""
+  periods_not_starts_with: String
+
+  """All values ending with the given string."""
+  periods_ends_with: String
+
+  """All values not ending with the given string."""
+  periods_not_ends_with: String
 }
 
 type ScheduleSubscriptionPayload {
@@ -474,22 +740,40 @@ input ScheduleSubscriptionWhereInput {
 input ScheduleUpdateDataInput {
   name: String
   periods: String
-  user: UserUpdateOneWithoutSchedulesInput
+  user: UserUpdateOneRequiredWithoutSchedulesInput
 }
 
 input ScheduleUpdateInput {
   name: String
   periods: String
-  user: UserUpdateOneWithoutSchedulesInput
+  user: UserUpdateOneRequiredWithoutSchedulesInput
+}
+
+input ScheduleUpdateManyDataInput {
+  name: String
+  periods: String
+}
+
+input ScheduleUpdateManyMutationInput {
+  name: String
+  periods: String
 }
 
 input ScheduleUpdateManyWithoutUserInput {
   create: [ScheduleCreateWithoutUserInput!]
   connect: [ScheduleWhereUniqueInput!]
+  set: [ScheduleWhereUniqueInput!]
   disconnect: [ScheduleWhereUniqueInput!]
   delete: [ScheduleWhereUniqueInput!]
   update: [ScheduleUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [ScheduleUpdateManyWithWhereNestedInput!]
+  deleteMany: [ScheduleScalarWhereInput!]
   upsert: [ScheduleUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input ScheduleUpdateManyWithWhereNestedInput {
+  where: ScheduleScalarWhereInput!
+  data: ScheduleUpdateManyDataInput!
 }
 
 input ScheduleUpdateOneInput {
@@ -671,8 +955,9 @@ type User implements Node {
   permissions: [Permission!]!
   announcements(where: AnnouncementWhereInput, orderBy: AnnouncementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Announcement!]
   schedules(where: ScheduleWhereInput, orderBy: ScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule!]
-  activeSchedule(where: ScheduleWhereInput): Schedule
-  editSchedule(where: ScheduleWhereInput): Schedule
+  activeSchedule: Schedule
+  editSchedule: Schedule
+  parnasHayom: [String!]!
 }
 
 """A connection to a list of items."""
@@ -686,9 +971,11 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  id: ID
   name: String!
   password: String!
   permissions: UserCreatepermissionsInput
+  parnasHayom: UserCreateparnasHayomInput
   announcements: AnnouncementCreateManyWithoutUserInput
   schedules: ScheduleCreateManyWithoutUserInput
   activeSchedule: ScheduleCreateOneInput
@@ -705,23 +992,31 @@ input UserCreateOneWithoutSchedulesInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateparnasHayomInput {
+  set: [String!]
+}
+
 input UserCreatepermissionsInput {
   set: [Permission!]
 }
 
 input UserCreateWithoutAnnouncementsInput {
+  id: ID
   name: String!
   password: String!
   permissions: UserCreatepermissionsInput
+  parnasHayom: UserCreateparnasHayomInput
   schedules: ScheduleCreateManyWithoutUserInput
   activeSchedule: ScheduleCreateOneInput
   editSchedule: ScheduleCreateOneInput
 }
 
 input UserCreateWithoutSchedulesInput {
+  id: ID
   name: String!
   password: String!
   permissions: UserCreatepermissionsInput
+  parnasHayom: UserCreateparnasHayomInput
   announcements: AnnouncementCreateManyWithoutUserInput
   activeSchedule: ScheduleCreateOneInput
   editSchedule: ScheduleCreateOneInput
@@ -743,10 +1038,6 @@ enum UserOrderByInput {
   name_DESC
   password_ASC
   password_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type UserPreviousValues {
@@ -754,6 +1045,7 @@ type UserPreviousValues {
   name: String!
   password: String!
   permissions: [Permission!]!
+  parnasHayom: [String!]!
 }
 
 type UserSubscriptionPayload {
@@ -797,26 +1089,36 @@ input UserUpdateInput {
   name: String
   password: String
   permissions: UserUpdatepermissionsInput
+  parnasHayom: UserUpdateparnasHayomInput
   announcements: AnnouncementUpdateManyWithoutUserInput
   schedules: ScheduleUpdateManyWithoutUserInput
   activeSchedule: ScheduleUpdateOneInput
   editSchedule: ScheduleUpdateOneInput
 }
 
-input UserUpdateOneWithoutAnnouncementsInput {
+input UserUpdateManyMutationInput {
+  name: String
+  password: String
+  permissions: UserUpdatepermissionsInput
+  parnasHayom: UserUpdateparnasHayomInput
+}
+
+input UserUpdateOneRequiredWithoutAnnouncementsInput {
   create: UserCreateWithoutAnnouncementsInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutAnnouncementsDataInput
   upsert: UserUpsertWithoutAnnouncementsInput
 }
 
-input UserUpdateOneWithoutSchedulesInput {
+input UserUpdateOneRequiredWithoutSchedulesInput {
   create: UserCreateWithoutSchedulesInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutSchedulesDataInput
   upsert: UserUpsertWithoutSchedulesInput
+}
+
+input UserUpdateparnasHayomInput {
+  set: [String!]
 }
 
 input UserUpdatepermissionsInput {
@@ -827,6 +1129,7 @@ input UserUpdateWithoutAnnouncementsDataInput {
   name: String
   password: String
   permissions: UserUpdatepermissionsInput
+  parnasHayom: UserUpdateparnasHayomInput
   schedules: ScheduleUpdateManyWithoutUserInput
   activeSchedule: ScheduleUpdateOneInput
   editSchedule: ScheduleUpdateOneInput
@@ -836,6 +1139,7 @@ input UserUpdateWithoutSchedulesDataInput {
   name: String
   password: String
   permissions: UserUpdatepermissionsInput
+  parnasHayom: UserUpdateparnasHayomInput
   announcements: AnnouncementUpdateManyWithoutUserInput
   activeSchedule: ScheduleUpdateOneInput
   editSchedule: ScheduleUpdateOneInput
