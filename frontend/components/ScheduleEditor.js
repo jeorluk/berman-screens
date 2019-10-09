@@ -87,7 +87,9 @@ const ScheduleEditor = () => {
         <Button
           className="deleteButton"
           onClick={() => {
-            deleteScheduleFromDB()
+            if (confirm('You are about to delete a schedule.  Are you sure?')) {
+              deleteScheduleFromDB()
+            }
           }}
         >
           <FontAwesomeIcon icon="trash" />

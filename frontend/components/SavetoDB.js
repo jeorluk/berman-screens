@@ -2,9 +2,6 @@ import React, { useContext } from 'react'
 import { Button } from './Styles'
 import { ScheduleContext, AnnouncementContext } from '../globalState'
 
-const handleClick = () => {
-  console.log('You clicked the new save button')
-}
 const SavetoDB = () => {
   const { updateScheduleDB } = useContext(ScheduleContext)
   const { updateAnnouncementDB } = useContext(AnnouncementContext)
@@ -13,6 +10,7 @@ const SavetoDB = () => {
       onClick={() => {
         updateScheduleDB()
         updateAnnouncementDB()
+        alert('Changes saved.')
       }}
     >
       Save

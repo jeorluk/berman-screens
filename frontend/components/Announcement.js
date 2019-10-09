@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Draggable } from 'react-beautiful-dnd'
@@ -10,7 +10,6 @@ const AnnouncementStyles = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  /* justify-items: left; */
 
   .buttonRow {
     width: 100%;
@@ -27,6 +26,9 @@ const AnnouncementStyles = styled.div`
     overflow: hidden;
     position: absolute;
     z-index: -1;
+  }
+  input {
+    width: 100%;
   }
   textarea {
     width: 100%;
@@ -75,8 +77,10 @@ const uploadFile = async (e, dataindex, dispatch) => {
   }
 }
 
-// const Announcement = ({ data, dataindex, dragStart, dragEnd, dispatch }) => {
 const Announcement = ({ data, dataindex, dispatch }) => {
+  const [title, setTitle] = useState(data.title)
+  const [items, setItems] = useState(data.items.join('\n'))
+
   return (
     <Draggable draggableId={data.id} index={dataindex}>
       {provided => (
@@ -135,29 +139,31 @@ const Announcement = ({ data, dataindex, dispatch }) => {
                 <input
                   type="text"
                   name="title"
-                  value={data.title}
-                  onChange={e =>
+                  value={title}
+                  onChange={e => {
+                    setTitle(e.target.value)
                     dispatch({
                       type: 'UPDATE_NAME',
                       index: dataindex,
                       title: e.target.value,
                     })
-                  }
+                  }}
                   placeholder="Screen Name"
                 />
 
                 <textarea
                   rows="8"
                   name="items"
-                  value={data.items.join('\n')}
+                  value={items}
                   placeholder="Add some announcements"
-                  onChange={e =>
+                  onChange={e => {
+                    setItems(e.target.value)
                     dispatch({
                       type: 'UPDATE_ITEMS',
                       index: dataindex,
                       items: e.target.value,
                     })
-                  }
+                  }}
                 />
               </div>
             )}

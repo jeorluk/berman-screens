@@ -18,7 +18,6 @@ const UpdatePaneStyles = styled.div`
   grid-template-areas:
     'header         header'
     'schedule announcements';
-  /* justify-items: center; */
   overflow: auto;
 
   .header {
@@ -39,12 +38,10 @@ const UpdatePaneStyles = styled.div`
     grid-template-columns: 1fr;
     grid-template-rows: minmax(0, max-content);
     grid-gap: 10px;
-    /* overflow: auto; */
   }
 
   .announcements {
     grid-area: announcements;
-    /* overflow: auto; */
   }
 `
 const CREATE_SCHEDULE_MUTATION = gql`
@@ -64,7 +61,6 @@ const UpdatePane = () => {
       <div className="header">
         <p>Logged in as: {user ? user.name : 'No user'}</p>
         <SavetoDB />
-        {/* <Button>Save</Button> */}
         <Signout />
       </div>
       <div className="schedule">
