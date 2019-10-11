@@ -4,6 +4,7 @@ import { ScheduleProvider } from './schedule'
 import { UserProvider } from './user'
 import { AnnouncementProvider } from './announcement'
 import { CURRENT_USER_QUERY, SINGLE_USER_QUERY } from '../components/User'
+import Error from '../components/ErrorMessage'
 
 function ProviderComposer({ contexts, children }) {
   return contexts.reduceRight(
@@ -21,21 +22,14 @@ function ContextProvider({ children, division }) {
     data: currentUserData,
     loading: currentUserLoading,
     error: currentUserError,
-    // data,
-    // loading,
-    // error,
   } = useQuery(CURRENT_USER_QUERY, {
     skip: division,
-    // pollInterval: 500,
   })
 
   const {
     data: singleUserData,
     loading: singleUserLoading,
     error: singleUserError,
-    // data,
-    // loading,
-    // error,
   } = useQuery(SINGLE_USER_QUERY, {
     variables: { name: division },
     skip: !division,
@@ -48,23 +42,10 @@ function ContextProvider({ children, division }) {
     } else if (currentUserData) {
       setUserData(currentUserData.me)
     } else return
-
-    // switch (true) {
-    //   case singleUserData:
-    //     break
-    //   case currentUserData:
-    //     break
-    //   default:
-    //     return
-    // }
-    // if (singleUserData)
-    //   if (data) {
-    //     setUserData(data.me)
-    //   }
   }, [singleUserData, currentUserData])
 
   if (singleUserLoading || currentUserLoading) return <p>Loading...</p>
-  if (singleUserError || currentUserError) return <p>Error...</p>
+  if (singleUserError || currentUserError) return <Error error={error} />
 
   console.log(userData)
   return (

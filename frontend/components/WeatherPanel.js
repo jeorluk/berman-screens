@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import Error from './ErrorMessage'
 
 const WEATHER_QUERY = gql`
   query WEATHER_QUERY {
@@ -49,7 +50,7 @@ const WeatherPanel = () => {
   })
 
   if (loading) return <p>Loading...</p>
-  if (error) return <p>Error...</p>
+  if (error) return <Error error={error} />
 
   return (
     <WeatherContainer id="weatherContainer">

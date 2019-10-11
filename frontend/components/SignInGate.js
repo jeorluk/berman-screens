@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { CURRENT_USER_QUERY } from './User'
 import Signin from './Signin'
 import { useQuery } from '@apollo/react-hooks'
+import Error from './ErrorMessage'
 
 const StyledSigninDiv = styled.div`
   margin: auto;
@@ -19,7 +20,7 @@ const SignInGate = props => {
   })
 
   if (loading) return <p>Loading...</p>
-  if (error) return <p>Error...</p>
+  if (error) return <Error error={error} />
 
   if (!data.me) {
     return (

@@ -1,6 +1,7 @@
 import { createContext, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { CURRENT_USER_QUERY } from '../components/User'
+import Error from '../components/ErrorMessage'
 
 export const UserContext = createContext()
 
@@ -20,7 +21,7 @@ export const UserProvider = props => {
     console.log('Loading')
     return <p>Loading...</p>
   }
-  if (error) return <p>Error...</p>
+  if (error) return <Error error={error} />
 
   return (
     <UserContext.Provider
