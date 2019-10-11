@@ -4,6 +4,7 @@ import { ScheduleProvider } from './schedule'
 import { UserProvider } from './user'
 import { AnnouncementProvider } from './announcement'
 import { CURRENT_USER_QUERY, SINGLE_USER_QUERY } from '../components/User'
+import Error from '../components/ErrorMessage'
 
 function ProviderComposer({ contexts, children }) {
   return contexts.reduceRight(
@@ -64,7 +65,8 @@ function ContextProvider({ children, division }) {
   }, [singleUserData, currentUserData])
 
   if (singleUserLoading || currentUserLoading) return <p>Loading...</p>
-  if (singleUserError || currentUserError) return <p>Error...</p>
+  if (singleUserError || currentUserError)
+    return <Error error={singleUserError || currentUserError} />
 
   console.log(userData)
   return (
