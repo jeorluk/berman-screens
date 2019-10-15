@@ -9,15 +9,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ParnasMessageEditor from './ParnasMessageEditor'
 
 const ParnasUpdaterStyles = styled.div`
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 50px 1fr;
+  grid-template-columns: 1fr;
+
   .header {
     font-size: 3rem;
-    padding: 0 10px;
-    grid-area: header;
+    /* padding: 0 10px; */
+    /* grid-area: header; */
     display: grid;
-    grid-gap: 10px;
+    /* grid-gap: 10px; */
     grid-template-columns: 1fr;
     grid-auto-flow: column;
     align-items: center;
+  }
+
+  .content {
+    width: 100vw;
+    overflow: auto;
   }
 `
 
@@ -85,6 +95,51 @@ const ParnasUpdater = () => {
         <SavetoDB />
         <Signout />
       </div>
+
+      <div className="buttonRow">
+        <EditButton name="bold" cmd="bold" />
+        <EditButton name="align-center" cmd="justifyCenter" />
+        <EditButton name="align-left" cmd="justifyLeft" />
+        <EditButton
+          name="tint"
+          cmd="foreColor"
+          color={themeContext.orange}
+          arg={themeContext.orange}
+        />
+        <EditButton
+          name="tint-slash"
+          cmd="foreColor"
+          color={themeContext.orange}
+          arg={themeContext.primary}
+        />
+      </div>
+      <div className="content">
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="parnasList">
+            {provided => (
+              <ParnasList ref={provided.innerRef} {...provided.droppableProps}>
+                {messages.map((message, index) => (
+                  <ParnasMessageEditor
+                    key={message.id}
+                    dataIndex={index}
+                    data={message}
+                  />
+                ))}
+                {provided.placeholder}
+              </ParnasList>
+            )}
+          </Droppable>
+        </DragDropContext>
+        <Button onClick={() => dispatch({ type: 'ADD_MESSAGE' })}>
+          Add Page
+        </Button>
+      </div>
+      {/* 
+      <div className="header">
+        <p>Logged in as: {user ? user.name : 'No user'}</p>
+        <SavetoDB />
+        <Signout />
+      </div>
       <div className="buttonRow">
         <EditButton name="bold" cmd="bold" />
         <EditButton name="align-center" cmd="justifyCenter" />
@@ -103,27 +158,27 @@ const ParnasUpdater = () => {
         />
       </div>
 
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="parnasList">
-          {provided => (
-            <ParnasList ref={provided.innerRef} {...provided.droppableProps}>
-              {messages.map((message, index) => (
-                <ParnasMessageEditor
-                  key={message.id}
-                  dataIndex={index}
-                  data={message}
-                />
-              ))}
-              {provided.placeholder}
-            </ParnasList>
-          )}
-        </Droppable>
-      </DragDropContext>
-
-      <div></div>
-      <Button onClick={() => dispatch({ type: 'ADD_MESSAGE' })}>
-        Add Page
-      </Button>
+      <div className="content">
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="parnasList">
+            {provided => (
+              <ParnasList ref={provided.innerRef} {...provided.droppableProps}>
+                {messages.map((message, index) => (
+                  <ParnasMessageEditor
+                    key={message.id}
+                    dataIndex={index}
+                    data={message}
+                  />
+                ))}
+                {provided.placeholder}
+              </ParnasList>
+            )}
+          </Droppable>
+        </DragDropContext>
+        <Button onClick={() => dispatch({ type: 'ADD_MESSAGE' })}>
+          Add Page
+        </Button>
+      </div> */}
     </ParnasUpdaterStyles>
   )
 }
