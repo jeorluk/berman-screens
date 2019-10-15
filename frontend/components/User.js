@@ -28,6 +28,11 @@ export const CURRENT_USER_QUERY = gql`
         name
         periods
       }
+      parnasHayom {
+        id
+        message
+        order
+      }
     }
   }
 `
@@ -47,6 +52,11 @@ export const SINGLE_USER_QUERY = gql`
         id
         name
         periods
+      }
+      parnasHayom {
+        id
+        message
+        order
       }
     }
   }

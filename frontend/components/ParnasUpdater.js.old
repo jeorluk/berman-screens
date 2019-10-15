@@ -1,0 +1,253 @@
+import React, { useContext, useState, useEffect } from 'react'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { Button } from './Styles'
+import ParnasEditor from './ParnasMessageEditor'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import styled, { ThemeContext } from 'styled-components'
+import Signout from './Signout'
+import { UserContext } from '../globalState'
+import SavetoDB from './SavetoDB'
+
+const ParnasUpdaterStyles = styled.div`
+  /* height: 100vh;
+  width: 100%;
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 75px 50px auto; */
+  /* grid-template-rows: 75px 1fr; */
+  /* grid-template-areas:
+    'header         header'
+    'schedule announcements'; */
+  /* overflow: auto; */
+
+  .header {
+    font-size: 3rem;
+    padding: 0 10px;
+    grid-area: header;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr;
+    grid-auto-flow: column;
+    align-items: center;
+  }
+
+  .buttonRow {
+    height: 60px;
+    font-size: 3rem;
+    padding: 0 10px;
+    display: flex;
+    overflow: auto;
+    /* display: grid;
+    grid-gap: 10px;
+    grid-template-columns: auto;
+    grid-auto-flow: column;
+    align-items: center; */
+    .button {
+      height: 30px;
+    }
+  }
+
+  /* .schedule {
+    margin-bottom: 5px;
+    grid-area: schedule;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, max-content);
+    grid-gap: 10px;
+  }
+
+  .announcements {
+    grid-area: announcements;
+  } */
+`
+const ParnasList = styled.div`
+  padding: 8px;
+`
+const ParnasUpdater = () => {
+  const themeContext = useContext(ThemeContext)
+  const { user } = useContext(UserContext)
+  const [localParnas, setLocalParnas] = useState([])
+
+  useEffect(() => {
+    if (user.parnasHayom) {
+      setLocalParnas(user.parnasHayom)
+    }
+  }, [user.parnasHayom])
+
+  const onDragEnd = result => {
+    const { destination, source, draggableId } = result
+    console.log('drag ended')
+    // if (!destination) {
+    //   return
+    // }
+
+    // if (
+    //   destination.droppableId === source.droppableId &&
+    //   destination.index === source.index
+    // ) {
+    //   return
+    // }
+
+    // const newAnnouncements = [...localAnnouncements]
+    // const movedAnouncement = newAnnouncements.splice(source.index, 1)[0]
+    // newAnnouncements.splice(destination.index, 0, movedAnouncement)
+
+    // setLocalAnnouncements(newAnnouncements)
+    // dispatch({ type: 'UPDATE_ORDER', payload: newAnnouncements })
+  }
+
+  const EditButton = props => {
+    return (
+      <Button
+        className="editButton"
+        key={props.cmd}
+        onMouseDown={evt => {
+          evt.preventDefault() // Avoids loosing focus from the editable area
+          document.execCommand(props.cmd, false, props.arg) // Send the command to the browser
+        }}
+      >
+        <FontAwesomeIcon icon={props.name} color={props.color || 'white'} />
+      </Button>
+    )
+  }
+
+  console.log(localParnas)
+  return (
+    <ParnasUpdaterStyles>
+      <div className="header">
+        <p>Logged in as: {user ? user.name : 'No user'}</p>
+        <SavetoDB />
+        <Signout />
+      </div>
+      <div className="buttonRow">
+        <EditButton name="bold" cmd="bold" />
+        <EditButton name="align-center" cmd="justifyCenter" />
+        <EditButton name="align-left" cmd="justifyLeft" />
+        <EditButton
+          name="tint"
+          cmd="foreColor"
+          color={themeContext.orange}
+          arg={themeContext.orange}
+        />
+        <EditButton
+          name="tint-slash"
+          cmd="foreColor"
+          color={themeContext.orange}
+          arg={themeContext.primary}
+        />
+      </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="parnasList">
+          {provided => (
+            <ParnasList ref={provided.innerRef} {...provided.droppableProps}>
+              {localParnas.map((item, index) => {
+                return (
+                  <ParnasEditor
+                    key={item.id}
+                    parnasMessage={item.message}
+                    dataIndex={index}
+                  />
+                  //   <Par
+                  //     key={item.id}
+                  //     data={item}
+                  //     dataindex={index}
+                  //     dispatch={dispatch}
+                  //   />
+                )
+              })}
+              {provided.placeholder}
+            </ParnasList>
+          )}
+        </Droppable>
+      </DragDropContext>
+
+      <Button
+        onClick={() => setLocalParnas([...localParnas, 'Add stuff here'])}
+      >
+        Add Page
+      </Button>
+    </ParnasUpdaterStyles>
+  )
+}
+
+export default ParnasUpdater
+
+/*
+  const { announcements, dispatch } = useContext(AnnouncementContext)
+
+  
+
+  const onDragEnd = result => {
+    const { destination, source, draggableId } = result
+
+    if (!destination) {
+      return
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return
+    }
+
+    const newAnnouncements = [...localAnnouncements]
+    const movedAnouncement = newAnnouncements.splice(source.index, 1)[0]
+    newAnnouncements.splice(destination.index, 0, movedAnouncement)
+
+    setLocalAnnouncements(newAnnouncements)
+    dispatch({ type: 'UPDATE_ORDER', payload: newAnnouncements })
+  }
+
+  return (
+    <AnnouncementsUpdaterStyles>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="announcementsList">
+          {provided => (
+            <AnnouncementList
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {localAnnouncements.map((item, index) => {
+                return (
+                  <Announcement
+                    key={item.id}
+                    data={item}
+                    dataindex={index}
+                    dispatch={dispatch}
+                  />
+                )
+              })}
+              {provided.placeholder}
+            </AnnouncementList>
+          )}
+        </Droppable>
+      </DragDropContext>
+      <Button onClick={() => dispatch({ type: 'ADD_ANNOUNCEMENT' })}>
+        Add Page
+      </Button>
+    </AnnouncementsUpdaterStyles>
+  )
+}
+*/
+
+/*
+
+const UpdatePane = () => {
+
+  return (
+    <UpdatePaneStyles>
+      <div className="schedule">
+        <SchedulePicker />
+        <ScheduleEditor />
+      </div>
+      <div className="announcements">
+        <AnnouncementUpdater />
+      </div>
+    </UpdatePaneStyles>
+  )
+}
+
+export default UpdatePane
+*/

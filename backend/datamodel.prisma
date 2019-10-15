@@ -12,7 +12,7 @@ type User {
   schedules: [Schedule!]! @relation(name: "UserSchedules")
   activeSchedule: Schedule @relation(name: "ActiveSchedule")
   editSchedule: Schedule @relation(name: "EditSchedule")
-  parnasHayom: [String!]! @scalarList(strategy: RELATION)
+  parnasHayom: [ParnasMessage!]! @relation(name: "ParnasHayom")
 }
 
 type Schedule {
@@ -28,5 +28,11 @@ type Announcement {
   items: [String!]! @scalarList(strategy: RELATION)
   user: User! @relation(name: "UserAnnouncements")
   isLinkToImage: Boolean!
+  order: Int!
+}
+
+type ParnasMessage {
+  id: ID! @unique @id
+  message: String!
   order: Int!
 }

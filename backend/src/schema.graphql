@@ -47,4 +47,5 @@ type User {
   schedules(where: ScheduleWhereInput, orderBy: ScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule]!
   activeSchedule: Schedule
   editSchedule: Schedule
+  parnasHayom(where: ParnasMessageWhereInput, orderBy: ParnasMessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ParnasMessage!]
 }

@@ -1,7 +1,11 @@
 # source: https://us1.prisma.sh/jim-orluk/berman-screens/dev
-# timestamp: Wed Oct 09 2019 13:56:54 GMT-0400 (Eastern Daylight Time)
+# timestamp: Mon Oct 14 2019 14:55:56 GMT-0400 (Eastern Daylight Time)
 
 type AggregateAnnouncement {
+  count: Int!
+}
+
+type AggregateParnasMessage {
   count: Int!
 }
 
@@ -437,21 +441,27 @@ scalar Long
 type Mutation {
   createUser(data: UserCreateInput!): User!
   createAnnouncement(data: AnnouncementCreateInput!): Announcement!
+  createParnasMessage(data: ParnasMessageCreateInput!): ParnasMessage!
   createSchedule(data: ScheduleCreateInput!): Schedule!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateAnnouncement(data: AnnouncementUpdateInput!, where: AnnouncementWhereUniqueInput!): Announcement
+  updateParnasMessage(data: ParnasMessageUpdateInput!, where: ParnasMessageWhereUniqueInput!): ParnasMessage
   updateSchedule(data: ScheduleUpdateInput!, where: ScheduleWhereUniqueInput!): Schedule
   deleteUser(where: UserWhereUniqueInput!): User
   deleteAnnouncement(where: AnnouncementWhereUniqueInput!): Announcement
+  deleteParnasMessage(where: ParnasMessageWhereUniqueInput!): ParnasMessage
   deleteSchedule(where: ScheduleWhereUniqueInput!): Schedule
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertAnnouncement(where: AnnouncementWhereUniqueInput!, create: AnnouncementCreateInput!, update: AnnouncementUpdateInput!): Announcement!
+  upsertParnasMessage(where: ParnasMessageWhereUniqueInput!, create: ParnasMessageCreateInput!, update: ParnasMessageUpdateInput!): ParnasMessage!
   upsertSchedule(where: ScheduleWhereUniqueInput!, create: ScheduleCreateInput!, update: ScheduleUpdateInput!): Schedule!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyAnnouncements(data: AnnouncementUpdateManyMutationInput!, where: AnnouncementWhereInput): BatchPayload!
+  updateManyParnasMessages(data: ParnasMessageUpdateManyMutationInput!, where: ParnasMessageWhereInput): BatchPayload!
   updateManySchedules(data: ScheduleUpdateManyMutationInput!, where: ScheduleWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyAnnouncements(where: AnnouncementWhereInput): BatchPayload!
+  deleteManyParnasMessages(where: ParnasMessageWhereInput): BatchPayload!
   deleteManySchedules(where: ScheduleWhereInput): BatchPayload!
 }
 
@@ -482,6 +492,372 @@ type PageInfo {
   endCursor: String
 }
 
+type ParnasMessage implements Node {
+  id: ID!
+  message: String!
+  order: Int!
+}
+
+"""A connection to a list of items."""
+type ParnasMessageConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ParnasMessageEdge]!
+  aggregate: AggregateParnasMessage!
+}
+
+input ParnasMessageCreateInput {
+  id: ID
+  message: String!
+  order: Int!
+}
+
+input ParnasMessageCreateManyInput {
+  create: [ParnasMessageCreateInput!]
+  connect: [ParnasMessageWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type ParnasMessageEdge {
+  """The item at the end of the edge."""
+  node: ParnasMessage!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ParnasMessageOrderByInput {
+  id_ASC
+  id_DESC
+  message_ASC
+  message_DESC
+  order_ASC
+  order_DESC
+}
+
+type ParnasMessagePreviousValues {
+  id: ID!
+  message: String!
+  order: Int!
+}
+
+input ParnasMessageScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ParnasMessageScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ParnasMessageScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ParnasMessageScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  message: String
+
+  """All values that are not equal to given value."""
+  message_not: String
+
+  """All values that are contained in given list."""
+  message_in: [String!]
+
+  """All values that are not contained in given list."""
+  message_not_in: [String!]
+
+  """All values less than the given value."""
+  message_lt: String
+
+  """All values less than or equal the given value."""
+  message_lte: String
+
+  """All values greater than the given value."""
+  message_gt: String
+
+  """All values greater than or equal the given value."""
+  message_gte: String
+
+  """All values containing the given string."""
+  message_contains: String
+
+  """All values not containing the given string."""
+  message_not_contains: String
+
+  """All values starting with the given string."""
+  message_starts_with: String
+
+  """All values not starting with the given string."""
+  message_not_starts_with: String
+
+  """All values ending with the given string."""
+  message_ends_with: String
+
+  """All values not ending with the given string."""
+  message_not_ends_with: String
+  order: Int
+
+  """All values that are not equal to given value."""
+  order_not: Int
+
+  """All values that are contained in given list."""
+  order_in: [Int!]
+
+  """All values that are not contained in given list."""
+  order_not_in: [Int!]
+
+  """All values less than the given value."""
+  order_lt: Int
+
+  """All values less than or equal the given value."""
+  order_lte: Int
+
+  """All values greater than the given value."""
+  order_gt: Int
+
+  """All values greater than or equal the given value."""
+  order_gte: Int
+}
+
+type ParnasMessageSubscriptionPayload {
+  mutation: MutationType!
+  node: ParnasMessage
+  updatedFields: [String!]
+  previousValues: ParnasMessagePreviousValues
+}
+
+input ParnasMessageSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ParnasMessageSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ParnasMessageSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ParnasMessageSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ParnasMessageWhereInput
+}
+
+input ParnasMessageUpdateDataInput {
+  message: String
+  order: Int
+}
+
+input ParnasMessageUpdateInput {
+  message: String
+  order: Int
+}
+
+input ParnasMessageUpdateManyDataInput {
+  message: String
+  order: Int
+}
+
+input ParnasMessageUpdateManyInput {
+  create: [ParnasMessageCreateInput!]
+  connect: [ParnasMessageWhereUniqueInput!]
+  set: [ParnasMessageWhereUniqueInput!]
+  disconnect: [ParnasMessageWhereUniqueInput!]
+  delete: [ParnasMessageWhereUniqueInput!]
+  update: [ParnasMessageUpdateWithWhereUniqueNestedInput!]
+  updateMany: [ParnasMessageUpdateManyWithWhereNestedInput!]
+  deleteMany: [ParnasMessageScalarWhereInput!]
+  upsert: [ParnasMessageUpsertWithWhereUniqueNestedInput!]
+}
+
+input ParnasMessageUpdateManyMutationInput {
+  message: String
+  order: Int
+}
+
+input ParnasMessageUpdateManyWithWhereNestedInput {
+  where: ParnasMessageScalarWhereInput!
+  data: ParnasMessageUpdateManyDataInput!
+}
+
+input ParnasMessageUpdateWithWhereUniqueNestedInput {
+  where: ParnasMessageWhereUniqueInput!
+  data: ParnasMessageUpdateDataInput!
+}
+
+input ParnasMessageUpsertWithWhereUniqueNestedInput {
+  where: ParnasMessageWhereUniqueInput!
+  update: ParnasMessageUpdateDataInput!
+  create: ParnasMessageCreateInput!
+}
+
+input ParnasMessageWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ParnasMessageWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ParnasMessageWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ParnasMessageWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  message: String
+
+  """All values that are not equal to given value."""
+  message_not: String
+
+  """All values that are contained in given list."""
+  message_in: [String!]
+
+  """All values that are not contained in given list."""
+  message_not_in: [String!]
+
+  """All values less than the given value."""
+  message_lt: String
+
+  """All values less than or equal the given value."""
+  message_lte: String
+
+  """All values greater than the given value."""
+  message_gt: String
+
+  """All values greater than or equal the given value."""
+  message_gte: String
+
+  """All values containing the given string."""
+  message_contains: String
+
+  """All values not containing the given string."""
+  message_not_contains: String
+
+  """All values starting with the given string."""
+  message_starts_with: String
+
+  """All values not starting with the given string."""
+  message_not_starts_with: String
+
+  """All values ending with the given string."""
+  message_ends_with: String
+
+  """All values not ending with the given string."""
+  message_not_ends_with: String
+  order: Int
+
+  """All values that are not equal to given value."""
+  order_not: Int
+
+  """All values that are contained in given list."""
+  order_in: [Int!]
+
+  """All values that are not contained in given list."""
+  order_not_in: [Int!]
+
+  """All values less than the given value."""
+  order_lt: Int
+
+  """All values less than or equal the given value."""
+  order_lte: Int
+
+  """All values greater than the given value."""
+  order_gt: Int
+
+  """All values greater than or equal the given value."""
+  order_gte: Int
+}
+
+input ParnasMessageWhereUniqueInput {
+  id: ID
+}
+
 enum Permission {
   USER
   ADMIN
@@ -490,12 +866,15 @@ enum Permission {
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   announcements(where: AnnouncementWhereInput, orderBy: AnnouncementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Announcement]!
+  parnasMessages(where: ParnasMessageWhereInput, orderBy: ParnasMessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ParnasMessage]!
   schedules(where: ScheduleWhereInput, orderBy: ScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule]!
   user(where: UserWhereUniqueInput!): User
   announcement(where: AnnouncementWhereUniqueInput!): Announcement
+  parnasMessage(where: ParnasMessageWhereUniqueInput!): ParnasMessage
   schedule(where: ScheduleWhereUniqueInput!): Schedule
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   announcementsConnection(where: AnnouncementWhereInput, orderBy: AnnouncementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AnnouncementConnection!
+  parnasMessagesConnection(where: ParnasMessageWhereInput, orderBy: ParnasMessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ParnasMessageConnection!
   schedulesConnection(where: ScheduleWhereInput, orderBy: ScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ScheduleConnection!
 
   """Fetches an object given its ID"""
@@ -945,6 +1324,7 @@ input ScheduleWhereUniqueInput {
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   announcement(where: AnnouncementSubscriptionWhereInput): AnnouncementSubscriptionPayload
+  parnasMessage(where: ParnasMessageSubscriptionWhereInput): ParnasMessageSubscriptionPayload
   schedule(where: ScheduleSubscriptionWhereInput): ScheduleSubscriptionPayload
 }
 
@@ -957,7 +1337,7 @@ type User implements Node {
   schedules(where: ScheduleWhereInput, orderBy: ScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule!]
   activeSchedule: Schedule
   editSchedule: Schedule
-  parnasHayom: [String!]!
+  parnasHayom(where: ParnasMessageWhereInput, orderBy: ParnasMessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ParnasMessage!]
 }
 
 """A connection to a list of items."""
@@ -975,11 +1355,11 @@ input UserCreateInput {
   name: String!
   password: String!
   permissions: UserCreatepermissionsInput
-  parnasHayom: UserCreateparnasHayomInput
   announcements: AnnouncementCreateManyWithoutUserInput
   schedules: ScheduleCreateManyWithoutUserInput
   activeSchedule: ScheduleCreateOneInput
   editSchedule: ScheduleCreateOneInput
+  parnasHayom: ParnasMessageCreateManyInput
 }
 
 input UserCreateOneWithoutAnnouncementsInput {
@@ -992,10 +1372,6 @@ input UserCreateOneWithoutSchedulesInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateparnasHayomInput {
-  set: [String!]
-}
-
 input UserCreatepermissionsInput {
   set: [Permission!]
 }
@@ -1005,10 +1381,10 @@ input UserCreateWithoutAnnouncementsInput {
   name: String!
   password: String!
   permissions: UserCreatepermissionsInput
-  parnasHayom: UserCreateparnasHayomInput
   schedules: ScheduleCreateManyWithoutUserInput
   activeSchedule: ScheduleCreateOneInput
   editSchedule: ScheduleCreateOneInput
+  parnasHayom: ParnasMessageCreateManyInput
 }
 
 input UserCreateWithoutSchedulesInput {
@@ -1016,10 +1392,10 @@ input UserCreateWithoutSchedulesInput {
   name: String!
   password: String!
   permissions: UserCreatepermissionsInput
-  parnasHayom: UserCreateparnasHayomInput
   announcements: AnnouncementCreateManyWithoutUserInput
   activeSchedule: ScheduleCreateOneInput
   editSchedule: ScheduleCreateOneInput
+  parnasHayom: ParnasMessageCreateManyInput
 }
 
 """An edge in a connection."""
@@ -1045,7 +1421,6 @@ type UserPreviousValues {
   name: String!
   password: String!
   permissions: [Permission!]!
-  parnasHayom: [String!]!
 }
 
 type UserSubscriptionPayload {
@@ -1089,18 +1464,17 @@ input UserUpdateInput {
   name: String
   password: String
   permissions: UserUpdatepermissionsInput
-  parnasHayom: UserUpdateparnasHayomInput
   announcements: AnnouncementUpdateManyWithoutUserInput
   schedules: ScheduleUpdateManyWithoutUserInput
   activeSchedule: ScheduleUpdateOneInput
   editSchedule: ScheduleUpdateOneInput
+  parnasHayom: ParnasMessageUpdateManyInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
   password: String
   permissions: UserUpdatepermissionsInput
-  parnasHayom: UserUpdateparnasHayomInput
 }
 
 input UserUpdateOneRequiredWithoutAnnouncementsInput {
@@ -1117,10 +1491,6 @@ input UserUpdateOneRequiredWithoutSchedulesInput {
   upsert: UserUpsertWithoutSchedulesInput
 }
 
-input UserUpdateparnasHayomInput {
-  set: [String!]
-}
-
 input UserUpdatepermissionsInput {
   set: [Permission!]
 }
@@ -1129,20 +1499,20 @@ input UserUpdateWithoutAnnouncementsDataInput {
   name: String
   password: String
   permissions: UserUpdatepermissionsInput
-  parnasHayom: UserUpdateparnasHayomInput
   schedules: ScheduleUpdateManyWithoutUserInput
   activeSchedule: ScheduleUpdateOneInput
   editSchedule: ScheduleUpdateOneInput
+  parnasHayom: ParnasMessageUpdateManyInput
 }
 
 input UserUpdateWithoutSchedulesDataInput {
   name: String
   password: String
   permissions: UserUpdatepermissionsInput
-  parnasHayom: UserUpdateparnasHayomInput
   announcements: AnnouncementUpdateManyWithoutUserInput
   activeSchedule: ScheduleUpdateOneInput
   editSchedule: ScheduleUpdateOneInput
+  parnasHayom: ParnasMessageUpdateManyInput
 }
 
 input UserUpsertWithoutAnnouncementsInput {
@@ -1292,6 +1662,9 @@ input UserWhereInput {
   schedules_none: ScheduleWhereInput
   activeSchedule: ScheduleWhereInput
   editSchedule: ScheduleWhereInput
+  parnasHayom_every: ParnasMessageWhereInput
+  parnasHayom_some: ParnasMessageWhereInput
+  parnasHayom_none: ParnasMessageWhereInput
 }
 
 input UserWhereUniqueInput {

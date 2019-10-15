@@ -1,24 +1,17 @@
 import React from 'react'
-// import Formal, { Field } from 'formol'
+import styled from 'styled-components'
+import ParnasUpdater from './ParnasUpdater'
 
-const UpdateParnas = () => {
-  const item = {
-    name: 'Jim',
-    email: 'jim.orluk@gmail.com',
-  }
+const UpdateLayout = styled.div`
+  height: 100vh;
+  width: 100vw;
+`
+const UpdateStandard = () => {
   return (
-    <div>Stuff goes here!</div>
-    // <>
-    //   <Formal
-    //     onSubmit={e => {
-    //       console.log(e)
-    //     }}
-    //   >
-    //     <Field>Name</Field>
-    //     <Field>Email</Field>
-    //   </Formal>
-    // </>
+    <UpdateLayout>
+      <ParnasUpdater />
+    </UpdateLayout>
   )
 }
 
-export default UpdateParnas
+export default UpdateStandard
