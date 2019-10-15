@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import styled, { ThemeContext } from 'styled-components'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { ParnasContext, UserContext } from '../globalState'
 import SavetoDB from './SavetoDB'
 import Signout from './Signout'
@@ -19,6 +20,11 @@ const ParnasUpdaterStyles = styled.div`
     align-items: center;
   }
 `
+
+const ParnasList = styled.div`
+  padding: 8px;
+`
+
 const EditButton = props => {
   return (
     <Button
@@ -47,8 +53,27 @@ const ParnasUpdater = () => {
     }
   }, [messages])
 
-  console.log(localParnas)
-  // console.log(parnasContext)
+  const onDragEnd = result => {
+    const { destination, source, draggableId } = result
+    console.log('drag ended')
+    if (!destination) {
+      return
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return
+    }
+
+    const newMessages = [...localParnas]
+    const movedMessage = newMessages.splice(source.index, 1)[0]
+    newMessages.splice(destination.index, 0, movedMessage)
+
+    setLocalParnas(newMessages)
+    dispatch({ type: 'UPDATE_ORDER', payload: newMessages })
+  }
 
   if (!messages || !user) {
     return <p>Loading...</p>
@@ -77,11 +102,25 @@ const ParnasUpdater = () => {
           arg={themeContext.primary}
         />
       </div>
-      <div>
-        {messages.map(message => (
-          <ParnasMessageEditor key={message.id} data={message} />
-        ))}
-      </div>
+
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="parnasList">
+          {provided => (
+            <ParnasList ref={provided.innerRef} {...provided.droppableProps}>
+              {messages.map((message, index) => (
+                <ParnasMessageEditor
+                  key={message.id}
+                  dataIndex={index}
+                  data={message}
+                />
+              ))}
+              {provided.placeholder}
+            </ParnasList>
+          )}
+        </Droppable>
+      </DragDropContext>
+
+      <div></div>
       <Button onClick={() => dispatch({ type: 'ADD_MESSAGE' })}>
         Add Page
       </Button>

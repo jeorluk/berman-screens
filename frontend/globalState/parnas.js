@@ -61,10 +61,8 @@ const reducer = (state, action) => {
           ...state.messages,
           {
             id: `new_${uuid()}`,
-            title: '',
-            items: [],
+            message: '',
             order: state.messages.length,
-            isLinkToImage: false,
           },
         ],
       }

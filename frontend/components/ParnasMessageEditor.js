@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Draggable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 import sanitizeHtml from 'sanitize-html'
 import { Card, Button } from './Styles'
@@ -7,6 +8,7 @@ import ContentEditable from 'react-contenteditable'
 
 const EditorStyles = styled.div`
   position: relative;
+  margin: 5px;
 
   .deleteButton {
     position: absolute;
@@ -42,6 +44,16 @@ const EditorStyles = styled.div`
   }
 `
 
+const Handle = styled.div`
+  margin: auto 0.25em;
+  font-size: 3rem;
+  color: ${props => props.theme.primary};
+
+  &:hover {
+    cursor: grab;
+  }
+`
+
 const ParnasMessageEditor = ({ data, dataIndex, dispatch }) => {
   const [message, setMessage] = useState(data.message)
 
@@ -64,28 +76,33 @@ const ParnasMessageEditor = ({ data, dataIndex, dispatch }) => {
 
   return (
     <EditorStyles>
-      <Card>
-        <Button className="deleteButton" onClick={e => console.log(e)}>
-          <FontAwesomeIcon icon="trash" />
-        </Button>
-        <ContentEditable
-          className="editable"
-          //   html={editSchedule.periods} // innerHTML of the editable div
-          html={message}
-          tagName="pre"
-          // disabled={!this.state.editable} // use true to disable edition
-          onChange={e => {
-            console.log(e.target.value)
-            setMessage(e.target.value)
-            //setEditSchedule({ ...editSchedule, periods: e.target.value })
-            // setHtml(e.target.value)
-            //setEditScheduleDirty(true)
-          }} // handle innerHTML change
-          onBlur={() => {
-            sanitize()
-          }}
-        />
-      </Card>
+      <Draggable draggableId={data.id} index={dataIndex}>
+        {provided => (
+          <Card {...provided.draggableProps} ref={provided.innerRef}>
+            <Handle {...provided.dragHandleProps}>:::</Handle>
+            <Button className="deleteButton" onClick={e => console.log(e)}>
+              <FontAwesomeIcon icon="trash" />
+            </Button>
+            <ContentEditable
+              className="editable"
+              //   html={editSchedule.periods} // innerHTML of the editable div
+              html={message}
+              tagName="pre"
+              // disabled={!this.state.editable} // use true to disable edition
+              onChange={e => {
+                console.log(e.target.value)
+                setMessage(e.target.value)
+                //setEditSchedule({ ...editSchedule, periods: e.target.value })
+                // setHtml(e.target.value)
+                //setEditScheduleDirty(true)
+              }} // handle innerHTML change
+              onBlur={() => {
+                sanitize()
+              }}
+            />
+          </Card>
+        )}
+      </Draggable>
     </EditorStyles>
   )
 }
