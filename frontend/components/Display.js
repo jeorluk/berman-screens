@@ -26,9 +26,7 @@ const DisplayLayout = styled.div`
     grid-template-columns: 1fr;
   }
 `
-const Display = props => {
-  const { division } = props
-
+const Display = () => {
   return (
     <DisplayLayout>
       <SchedulePane />

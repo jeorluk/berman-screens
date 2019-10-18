@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/jim-orluk/berman-screens/dev
-# timestamp: Mon Oct 14 2019 14:55:56 GMT-0400 (Eastern Daylight Time)
+# timestamp: Tue Oct 15 2019 14:20:43 GMT-0400 (Eastern Daylight Time)
 
 type AggregateAnnouncement {
   count: Int!
@@ -495,6 +495,7 @@ type PageInfo {
 type ParnasMessage implements Node {
   id: ID!
   message: String!
+  user: User!
   order: Int!
 }
 
@@ -512,11 +513,18 @@ input ParnasMessageCreateInput {
   id: ID
   message: String!
   order: Int!
+  user: UserCreateOneWithoutParnasHayomInput!
 }
 
-input ParnasMessageCreateManyInput {
-  create: [ParnasMessageCreateInput!]
+input ParnasMessageCreateManyWithoutUserInput {
+  create: [ParnasMessageCreateWithoutUserInput!]
   connect: [ParnasMessageWhereUniqueInput!]
+}
+
+input ParnasMessageCreateWithoutUserInput {
+  id: ID
+  message: String!
+  order: Int!
 }
 
 """An edge in a connection."""
@@ -693,14 +701,10 @@ input ParnasMessageSubscriptionWhereInput {
   node: ParnasMessageWhereInput
 }
 
-input ParnasMessageUpdateDataInput {
-  message: String
-  order: Int
-}
-
 input ParnasMessageUpdateInput {
   message: String
   order: Int
+  user: UserUpdateOneRequiredWithoutParnasHayomInput
 }
 
 input ParnasMessageUpdateManyDataInput {
@@ -708,21 +712,21 @@ input ParnasMessageUpdateManyDataInput {
   order: Int
 }
 
-input ParnasMessageUpdateManyInput {
-  create: [ParnasMessageCreateInput!]
+input ParnasMessageUpdateManyMutationInput {
+  message: String
+  order: Int
+}
+
+input ParnasMessageUpdateManyWithoutUserInput {
+  create: [ParnasMessageCreateWithoutUserInput!]
   connect: [ParnasMessageWhereUniqueInput!]
   set: [ParnasMessageWhereUniqueInput!]
   disconnect: [ParnasMessageWhereUniqueInput!]
   delete: [ParnasMessageWhereUniqueInput!]
-  update: [ParnasMessageUpdateWithWhereUniqueNestedInput!]
+  update: [ParnasMessageUpdateWithWhereUniqueWithoutUserInput!]
   updateMany: [ParnasMessageUpdateManyWithWhereNestedInput!]
   deleteMany: [ParnasMessageScalarWhereInput!]
-  upsert: [ParnasMessageUpsertWithWhereUniqueNestedInput!]
-}
-
-input ParnasMessageUpdateManyMutationInput {
-  message: String
-  order: Int
+  upsert: [ParnasMessageUpsertWithWhereUniqueWithoutUserInput!]
 }
 
 input ParnasMessageUpdateManyWithWhereNestedInput {
@@ -730,15 +734,20 @@ input ParnasMessageUpdateManyWithWhereNestedInput {
   data: ParnasMessageUpdateManyDataInput!
 }
 
-input ParnasMessageUpdateWithWhereUniqueNestedInput {
-  where: ParnasMessageWhereUniqueInput!
-  data: ParnasMessageUpdateDataInput!
+input ParnasMessageUpdateWithoutUserDataInput {
+  message: String
+  order: Int
 }
 
-input ParnasMessageUpsertWithWhereUniqueNestedInput {
+input ParnasMessageUpdateWithWhereUniqueWithoutUserInput {
   where: ParnasMessageWhereUniqueInput!
-  update: ParnasMessageUpdateDataInput!
-  create: ParnasMessageCreateInput!
+  data: ParnasMessageUpdateWithoutUserDataInput!
+}
+
+input ParnasMessageUpsertWithWhereUniqueWithoutUserInput {
+  where: ParnasMessageWhereUniqueInput!
+  update: ParnasMessageUpdateWithoutUserDataInput!
+  create: ParnasMessageCreateWithoutUserInput!
 }
 
 input ParnasMessageWhereInput {
@@ -852,6 +861,7 @@ input ParnasMessageWhereInput {
 
   """All values greater than or equal the given value."""
   order_gte: Int
+  user: UserWhereInput
 }
 
 input ParnasMessageWhereUniqueInput {
@@ -1359,11 +1369,16 @@ input UserCreateInput {
   schedules: ScheduleCreateManyWithoutUserInput
   activeSchedule: ScheduleCreateOneInput
   editSchedule: ScheduleCreateOneInput
-  parnasHayom: ParnasMessageCreateManyInput
+  parnasHayom: ParnasMessageCreateManyWithoutUserInput
 }
 
 input UserCreateOneWithoutAnnouncementsInput {
   create: UserCreateWithoutAnnouncementsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutParnasHayomInput {
+  create: UserCreateWithoutParnasHayomInput
   connect: UserWhereUniqueInput
 }
 
@@ -1384,7 +1399,18 @@ input UserCreateWithoutAnnouncementsInput {
   schedules: ScheduleCreateManyWithoutUserInput
   activeSchedule: ScheduleCreateOneInput
   editSchedule: ScheduleCreateOneInput
-  parnasHayom: ParnasMessageCreateManyInput
+  parnasHayom: ParnasMessageCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutParnasHayomInput {
+  id: ID
+  name: String!
+  password: String!
+  permissions: UserCreatepermissionsInput
+  announcements: AnnouncementCreateManyWithoutUserInput
+  schedules: ScheduleCreateManyWithoutUserInput
+  activeSchedule: ScheduleCreateOneInput
+  editSchedule: ScheduleCreateOneInput
 }
 
 input UserCreateWithoutSchedulesInput {
@@ -1395,7 +1421,7 @@ input UserCreateWithoutSchedulesInput {
   announcements: AnnouncementCreateManyWithoutUserInput
   activeSchedule: ScheduleCreateOneInput
   editSchedule: ScheduleCreateOneInput
-  parnasHayom: ParnasMessageCreateManyInput
+  parnasHayom: ParnasMessageCreateManyWithoutUserInput
 }
 
 """An edge in a connection."""
@@ -1468,7 +1494,7 @@ input UserUpdateInput {
   schedules: ScheduleUpdateManyWithoutUserInput
   activeSchedule: ScheduleUpdateOneInput
   editSchedule: ScheduleUpdateOneInput
-  parnasHayom: ParnasMessageUpdateManyInput
+  parnasHayom: ParnasMessageUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1482,6 +1508,13 @@ input UserUpdateOneRequiredWithoutAnnouncementsInput {
   connect: UserWhereUniqueInput
   update: UserUpdateWithoutAnnouncementsDataInput
   upsert: UserUpsertWithoutAnnouncementsInput
+}
+
+input UserUpdateOneRequiredWithoutParnasHayomInput {
+  create: UserCreateWithoutParnasHayomInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutParnasHayomDataInput
+  upsert: UserUpsertWithoutParnasHayomInput
 }
 
 input UserUpdateOneRequiredWithoutSchedulesInput {
@@ -1502,7 +1535,17 @@ input UserUpdateWithoutAnnouncementsDataInput {
   schedules: ScheduleUpdateManyWithoutUserInput
   activeSchedule: ScheduleUpdateOneInput
   editSchedule: ScheduleUpdateOneInput
-  parnasHayom: ParnasMessageUpdateManyInput
+  parnasHayom: ParnasMessageUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutParnasHayomDataInput {
+  name: String
+  password: String
+  permissions: UserUpdatepermissionsInput
+  announcements: AnnouncementUpdateManyWithoutUserInput
+  schedules: ScheduleUpdateManyWithoutUserInput
+  activeSchedule: ScheduleUpdateOneInput
+  editSchedule: ScheduleUpdateOneInput
 }
 
 input UserUpdateWithoutSchedulesDataInput {
@@ -1512,12 +1555,17 @@ input UserUpdateWithoutSchedulesDataInput {
   announcements: AnnouncementUpdateManyWithoutUserInput
   activeSchedule: ScheduleUpdateOneInput
   editSchedule: ScheduleUpdateOneInput
-  parnasHayom: ParnasMessageUpdateManyInput
+  parnasHayom: ParnasMessageUpdateManyWithoutUserInput
 }
 
 input UserUpsertWithoutAnnouncementsInput {
   update: UserUpdateWithoutAnnouncementsDataInput!
   create: UserCreateWithoutAnnouncementsInput!
+}
+
+input UserUpsertWithoutParnasHayomInput {
+  update: UserUpdateWithoutParnasHayomDataInput!
+  create: UserCreateWithoutParnasHayomInput!
 }
 
 input UserUpsertWithoutSchedulesInput {

@@ -34,5 +34,6 @@ type Announcement {
 type ParnasMessage {
   id: ID! @unique @id
   message: String!
+  user: User! @relation(name: "ParnasHayom")
   order: Int!
 }

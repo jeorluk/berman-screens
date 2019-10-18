@@ -17,15 +17,18 @@ const EditorStyles = styled.div`
   }
 
   .editable {
-    max-width: 90%;
-    overflow: auto;
+    width: 100%;
+    max-width: 50vw;
+    /* max-height: calc(width/1.77); */
+    /* overflow: auto; */
+    overflow-wrap: break-word;
     padding: 0 10px;
 
     background-color: white;
     color: ${props => props.theme.primary};
     text-align: center;
     font-family: 'montserrat';
-    font-size: 4rem;
+    font-size: 1.8vw;
     line-height: 1.25;
     margin: 2px;
     border: 0;
@@ -54,7 +57,7 @@ const Handle = styled.div`
   }
 `
 
-const ParnasMessageEditor = ({ data, dataIndex, dispatch }) => {
+const ParnasMessageEditor = ({ data, dataindex, dispatch }) => {
   const [message, setMessage] = useState(data.message)
 
   const sanitizeConf = {
@@ -76,11 +79,16 @@ const ParnasMessageEditor = ({ data, dataIndex, dispatch }) => {
 
   return (
     <EditorStyles>
-      <Draggable draggableId={data.id} index={dataIndex}>
+      <Draggable draggableId={data.id} index={dataindex}>
         {provided => (
           <Card {...provided.draggableProps} ref={provided.innerRef}>
             <Handle {...provided.dragHandleProps}>:::</Handle>
-            <Button className="deleteButton" onClick={e => console.log(e)}>
+            <Button
+              className="deleteButton"
+              onClick={e =>
+                dispatch({ type: 'DELETE_MESSAGE', index: dataindex })
+              }
+            >
               <FontAwesomeIcon icon="trash" />
             </Button>
             <ContentEditable
@@ -90,8 +98,12 @@ const ParnasMessageEditor = ({ data, dataIndex, dispatch }) => {
               tagName="pre"
               // disabled={!this.state.editable} // use true to disable edition
               onChange={e => {
-                console.log(e.target.value)
                 setMessage(e.target.value)
+                dispatch({
+                  type: 'UPDATE_MESSAGE',
+                  index: dataindex,
+                  message: e.target.value,
+                })
                 //setEditSchedule({ ...editSchedule, periods: e.target.value })
                 // setHtml(e.target.value)
                 //setEditScheduleDirty(true)

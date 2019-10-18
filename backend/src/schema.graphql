@@ -17,6 +17,11 @@ type Mutation {
   createAnnouncement(title: String, items: [String], isLinkToImage: Boolean, order: Int): Announcement
   updateAnnouncement(id: ID!, title: String, items: [String], isLinkToImage: Boolean, order: Int): Announcement
   deleteAnnouncement(id: ID!): Announcement
+
+  createParnasMessage(message: String, order: Int): ParnasMessage
+  updateParnasMessage(id: ID!, message: String, order: Int): ParnasMessage
+  deleteParnasMessage(id: ID!): ParnasMessage
+
 }
 
 type Query {
@@ -27,6 +32,8 @@ type Query {
   schedule(where: ScheduleWhereUniqueInput!): Schedule
   announcements(where: AnnouncementWhereInput, orderBy: AnnouncementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Announcement]!
   announcement(where: AnnouncementWhereUniqueInput!): Announcement,
+  parnasMessage(where: ParnasMessageWhereUniqueInput!): ParnasMessage,
+  parnasMessages(where: ParnasMessageWhereInput, orderBy: ParnasMessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ParnasMessage]!
 
   weather: Weather
 }

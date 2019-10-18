@@ -27,7 +27,6 @@ const DELETE_PARNAS_MUTATION = gql`
   mutation DeleteParnasMessage($id: ID!) {
     deleteParnasMessage(id: $id) {
       id
-      title
     }
   }
 `
@@ -50,6 +49,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         messages: action.payload.map((mes, index) => {
+          console.log(`Message: ${mes}, index: ${index}`)
           return { ...mes, order: index }
         }),
       }
@@ -96,6 +96,7 @@ export const ParnasProvider = ({ children, userData }) => {
   }, [userData])
 
   const updateParnasDB = () => {
+    console.log(parnasState)
     parnasState.messages.map(message => {
       !message.id.startsWith('new_')
         ? updateParnasMessage({

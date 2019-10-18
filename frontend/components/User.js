@@ -28,7 +28,7 @@ export const CURRENT_USER_QUERY = gql`
         name
         periods
       }
-      parnasHayom {
+      parnasHayom(orderBy: order_ASC) {
         id
         message
         order

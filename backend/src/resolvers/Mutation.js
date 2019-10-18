@@ -227,6 +227,84 @@ const Mutation = {
     return ctx.db.mutation.deleteAnnouncement({ where }, info)
   },
   //#endregion
+
+  //#region ParnasMessage Mutations
+  async createParnasMessage(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to do that!')
+    }
+
+    const parnasMessage = await ctx.db.mutation.createParnasMessage(
+      {
+        data: {
+          message: args.message,
+          order: args.order,
+          user: {
+            connect: { id: ctx.request.userId },
+          },
+        },
+      },
+      info
+    )
+    return parnasMessage
+  },
+
+  async updateParnasMessage(parent, args, ctx, info) {
+    const where = { id: args.id }
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to do that!')
+    }
+
+    const parnasMessage = await ctx.db.query.parnasMessage(
+      { where },
+      `{id message user {id }}`
+    )
+    const ownsParnasMessage = parnasMessage.user.id === ctx.request.userId
+    console.log(info)
+
+    if (!ownsParnasMessage) {
+      throw new Error('This is not your message to delete!')
+    }
+
+    //first make a copy of the updates
+    const updates = { ...args }
+
+    console.log(updates)
+    //remove the ID from the updates
+    delete updates.id
+
+    //run the update method
+    return ctx.db.mutation.updateParnasMessage(
+      {
+        data: updates,
+        where: {
+          id: args.id,
+        },
+      },
+      info
+    )
+  },
+
+  async deleteParnasMessage(parent, args, ctx, info) {
+    const where = { id: args.id }
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to do that!')
+    }
+
+    const parnasMessage = await ctx.db.query.parnasMessage(
+      { where },
+      `{id user {id }}`
+    )
+    const ownsParnasMessage = parnasMessage.user.id === ctx.request.userId
+    console.log(info)
+
+    if (!ownsParnasMessage) {
+      throw new Error('This is not your message to delete!')
+    }
+
+    return ctx.db.mutation.deleteParnasMessage({ where }, info)
+  },
+  //#endregion
 }
 
 module.exports = Mutation
