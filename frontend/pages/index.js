@@ -19,6 +19,11 @@ const Index = () => (
           <a>Upper School Display Screen</a>
         </Link>
       </li>
+      <li>
+        <Link href="/parnashayom">
+          <a>Parnas Hayom Display Screen</a>
+        </Link>
+      </li>
     </ul>
   </div>
 )
