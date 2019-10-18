@@ -1,25 +1,12 @@
-import React, { useState, useContext } from 'react'
-import styled from 'styled-components'
-import { CURRENT_USER_QUERY } from './User'
-import { ScheduleContext, UserContext } from '../globalState/index'
-import SchedulePane from './SchedulePane'
-import UpdatePane from './UpdatePane'
-import { useQuery } from '@apollo/react-hooks'
+import React, { useContext } from 'react'
+import { UserContext } from '../globalState/index'
+import UpdateStandard from './UpdateStandard'
+import UpdateParnas from './UpdateParnas'
 
-const UpdateLayout = styled.div`
-  height: 90vh;
-  /* overflow: auto; */
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: auto 1fr;
-`
 const Update = () => {
-  return (
-    <UpdateLayout>
-      <SchedulePane />
-      <UpdatePane />
-    </UpdateLayout>
-  )
+  const { user } = useContext(UserContext)
+  if (!user) return <p>Loading...</p>
+  return user.name === 'parnashayom' ? <UpdateParnas /> : <UpdateStandard />
 }
 
 export default Update

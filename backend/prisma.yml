@@ -1,5 +1,8 @@
 #endpoint: ${env:PRISMA_ENDPOINT}
-endpoint: https://screens-prisma.jimorluk.com/berman-screens-prod/production
+#endpoint: https://screens-prisma.jimorluk.com/berman-screens-prod/production
+#endpoint: https://us1.prisma.sh/jim-orluk/berman-screens/dev
+#endpoint: https://us1.prisma.sh/jim-orluk/berman-screens/dev
+endpoint: https://us1.prisma.sh/jim-orluk/berman-screens/dev
 datamodel: datamodel.prisma
 #secret: ${env:PRISMA_SECRET}
 

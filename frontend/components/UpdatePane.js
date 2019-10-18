@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import gql from 'graphql-tag'
+// import gql from 'graphql-tag'
 import Signout from './Signout'
 import AnnouncementUpdater from './AnnouncementsUpdater'
 import SchedulePicker from './SchedulePicker'
@@ -44,14 +44,14 @@ const UpdatePaneStyles = styled.div`
     grid-area: announcements;
   }
 `
-const CREATE_SCHEDULE_MUTATION = gql`
-  mutation CreateScheduleMutation($name: String!, $periods: [Json!]) {
-    createSchedule(name: $name, periods: $periods) {
-      id
-      name
-    }
-  }
-`
+// const CREATE_SCHEDULE_MUTATION = gql`
+//   mutation CreateScheduleMutation($name: String!, $periods: [Json!]) {
+//     createSchedule(name: $name, periods: $periods) {
+//       id
+//       name
+//     }
+//   }
+// `
 
 const UpdatePane = () => {
   const { user } = useContext(UserContext)

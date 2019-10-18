@@ -25,6 +25,10 @@ const Query = {
   announcement: forwardTo('db'),
   announcements: forwardTo('db'),
 
+  //ParnasMessages
+  parnasMessage: forwardTo('db'),
+  parnasMessages: forwardTo('db'),
+
   //Weather
   async weather(parent, args, ctx, info) {
     const weatherData = await fetch(

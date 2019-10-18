@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { ScheduleProvider } from './schedule'
 import { UserProvider } from './user'
 import { AnnouncementProvider } from './announcement'
+import { ParnasProvider } from './parnas'
 import { CURRENT_USER_QUERY, SINGLE_USER_QUERY } from '../components/User'
 import Error from '../components/ErrorMessage'
 
@@ -45,7 +46,8 @@ function ContextProvider({ children, division }) {
   }, [singleUserData, currentUserData])
 
   if (singleUserLoading || currentUserLoading) return <p>Loading...</p>
-  if (singleUserError || currentUserError) return <Error error={error} />
+  if (singleUserError || currentUserError)
+    return <Error error={singleUserError || currentUserError} />
 
   console.log(userData)
   return (
@@ -54,6 +56,7 @@ function ContextProvider({ children, division }) {
         <ScheduleProvider userData={userData} />,
         <UserProvider />,
         <AnnouncementProvider userData={userData} />,
+        <ParnasProvider userData={userData} />,
       ]}
     >
       {children}

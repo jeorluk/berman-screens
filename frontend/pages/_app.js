@@ -6,6 +6,8 @@ import {
   faAlignCenter,
   faAlignLeft,
   faTrash,
+  faTint,
+  faTintSlash,
 } from '@fortawesome/free-solid-svg-icons'
 import withApolloClient from '../lib/with-apollo-client'
 import { ApolloProvider } from '@apollo/react-hooks'
@@ -14,7 +16,14 @@ import Page from '../components/Page'
 
 class MyApp extends App {
   render() {
-    library.add(faBold, faAlignCenter, faAlignLeft, faTrash)
+    library.add(
+      faBold,
+      faAlignCenter,
+      faAlignLeft,
+      faTrash,
+      faTint,
+      faTintSlash
+    )
     const { Component, pageProps, apolloClient } = this.props
     return (
       <ApolloProvider client={apolloClient}>
