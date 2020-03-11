@@ -136,7 +136,9 @@ const Mutation = {
     ctx.response.cookie('token', token, {
       httpOnly: true,
       maxAge: 100 * 60 * 60 * 24 * 365,
+      SameSite: 'None',
     })
+    ctx.response.cookie('token', token, {})
     //5. Return the user
     return user
   },
