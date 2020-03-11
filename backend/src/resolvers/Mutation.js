@@ -114,8 +114,7 @@ const Mutation = {
     //We set the jwt as a cookie on the response
     ctx.response.cookie('token', token, {
       httpOnly: true,
-      SameSite: 'None',
-      Secure: true,
+      SameSite: 'Lax',
       maxAge: 1000 * 60 * 60 * 24 * 365, //1 year cookie
     })
     //Finally we return the user to the browser
@@ -138,8 +137,7 @@ const Mutation = {
     ctx.response.cookie('token', token, {
       httpOnly: true,
       maxAge: 100 * 60 * 60 * 24 * 365,
-      SameSite: 'None',
-      Secure: true,
+      SameSite: 'Lax',
     })
     ctx.response.cookie('token', token, {})
     //5. Return the user
