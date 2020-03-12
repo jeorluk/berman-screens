@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import Moment from 'react-moment'
 
 const DateStyles = styled.div`
   text-align: center;
@@ -7,11 +8,9 @@ const DateStyles = styled.div`
 `
 
 const EnglishHebrewDates = () => {
-  const [englishDate, setEnglishDate] = useState('')
   const [hebrewDate, setHebrewDate] = useState('')
 
   useEffect(() => {
-    getFormattedEnglishDate()
     getHebrewDate()
     const intervalID = setInterval(() => {
       this.getFormattedEnglishDate()
@@ -20,42 +19,6 @@ const EnglishHebrewDates = () => {
 
     return clearInterval(intervalID)
   }, [])
-  const getFormattedEnglishDate = () => {
-    const monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ]
-
-    const dayNames = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ]
-
-    const date = new Date()
-    const weekday = date.getDay()
-    const day = date.getDate()
-    const monthIndex = date.getMonth()
-    const year = date.getFullYear()
-
-    setEnglishDate(
-      `${dayNames[weekday]}, ${monthNames[monthIndex]} ${day}, ${year}`
-    )
-  }
 
   const getHebrewDate = () => {
     const date = new Date()
@@ -74,8 +37,13 @@ const EnglishHebrewDates = () => {
 
   return (
     <DateStyles>
-      <div>{englishDate}</div>
+      <Moment interval={1000 * 60 * 60} format='dddd, MMMM D, YYYY' />
       <div>{hebrewDate}</div>
+      <Moment
+        style={{ fontFamily: 'monospace' }}
+        interval={1000}
+        format='LTS'
+      />
     </DateStyles>
   )
 }
