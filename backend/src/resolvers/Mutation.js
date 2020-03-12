@@ -115,8 +115,8 @@ const Mutation = {
     ctx.response.cookie('token', token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, //1 year cookie
-      sameSite: 'none',
-      secure: true,
+      sameSite: process.env.NODE_ENV === 'development' ? 'strict' : 'none',
+      secure: process.env.NODE_ENV === 'development' ? false : true,
     })
     //Finally we return the user to the browser
     return user
@@ -138,15 +138,19 @@ const Mutation = {
     ctx.response.cookie('token', token, {
       httpOnly: true,
       maxAge: 100 * 60 * 60 * 24 * 365,
-      sameSite: 'none',
-      secure: true,
+      sameSite: process.env.NODE_ENV === 'development' ? 'strict' : 'none',
+      secure: process.env.NODE_ENV === 'development' ? false : true,
     })
-    ctx.response.cookie('token', token, {})
     //5. Return the user
     return user
   },
   signout(parent, args, ctx, info) {
-    ctx.response.clearCookie('token')
+    ctx.response.clearCookie('token', {
+      httpOnly: true,
+      maxAge: 100 * 60 * 60 * 24 * 365,
+      sameSite: process.env.NODE_ENV === 'development' ? 'strict' : 'none',
+      secure: process.env.NODE_ENV === 'development' ? false : true,
+    })
     return { message: 'Goodbye!' }
   },
   //#endregion

@@ -32,7 +32,7 @@ const Signin = () => {
   return (
     <Card>
       <Form
-        method="post"
+        method='post'
         onSubmit={e => {
           e.preventDefault()
           signin({
@@ -46,21 +46,23 @@ const Signin = () => {
           <Error error={error} />
 
           <input
-            type="text"
-            name="name"
-            placeholder="name"
+            type='text'
+            name='name'
+            placeholder='name'
+            autoComplete='username'
             value={signInForm.name}
             onChange={saveToState}
           />
 
           <input
-            type="password"
-            name="password"
-            placeholder="password"
+            type='password'
+            name='password'
+            placeholder='password'
+            autoComplete='current-password'
             value={signInForm.password}
             onChange={saveToState}
           />
-          <Button type="submit">Sign In!</Button>
+          <Button type='submit'>Sign In!</Button>
         </fieldset>
       </Form>
     </Card>
